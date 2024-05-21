@@ -1,6 +1,13 @@
+package comherokuapptest;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
+
+import java.time.Duration;
 
 /**
  * Project-3 - ProjectName : com-herokuapp
@@ -17,13 +24,27 @@ import org.openqa.selenium.chrome.ChromeDriver;
  * 10. Refresh the page.
  * 11. Close the browser.
  */
-public class BrowserTest {
+public class MultiBrowserTest {
+    static String browserName = "firefox";
+    static WebDriver driver;
+    static String baseUrl = "http://the-internet.herokuapp.com/login";
 
     public static void main(String[] args) {
-        String baseUrl = "http://the-internet.herokuapp.com/login";
-        WebDriver driver = new ChromeDriver();
+        if (browserName.equalsIgnoreCase("chrome")) {
+            driver = new ChromeDriver();
+        } else if (browserName.equalsIgnoreCase("firefox")) {
+            driver = new FirefoxDriver();
+        } else if (browserName.equalsIgnoreCase("edge")) {
+            driver = new EdgeDriver();
+        } else if (browserName.equalsIgnoreCase("safari")) {
+            driver = new SafariDriver();
+        } else {
+            System.out.println("Incorrect browser");
+        }
         //2. Open URL.
         driver.get(baseUrl);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
         // 3. Print the title of the page.
         System.out.println("title page:" + driver.getTitle());
         // 4. Print the current url.
